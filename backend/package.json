@@ -1,0 +1,21 @@
+{
+  "name": "library-book-tracker-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Express API for Library Book Tracker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check supabase.js && node --check routes/books.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0"
+  }
+}

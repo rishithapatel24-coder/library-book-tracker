@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A simple library book tracker for cataloguing books and tracking loans.">
+  <title>Library Book Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Library Book Tracker home"><span class="brand-mark">LB</span><span>Library<span class="brand-light">Tracker</span></span></a>
+    <span class="top-note">BOOKS • BORROWING • RETURNS</span>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div><p class="eyebrow">LIBRARY MANAGEMENT</p><h1>Your library,<br><span>beautifully organised.</span></h1>
+      <p class="hero-copy">Keep your catalogue up to date and know which books are available at a glance.</p></div>
+      <div class="hero-icon" aria-hidden="true">▤</div>
+    </section>
+    <section class="stats" aria-label="Library summary">
+      <article class="stat-card"><span class="stat-label">TOTAL TITLES</span><strong id="totalBooks">—</strong><span class="stat-foot">In your catalogue</span></article>
+      <article class="stat-card"><span class="stat-label">AVAILABLE</span><strong id="availableBooks">—</strong><span class="stat-foot">Ready to borrow</span></article>
+      <article class="stat-card"><span class="stat-label">ON LOAN</span><strong id="loanedBooks">—</strong><span class="stat-foot">Currently borrowed</span></article>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">COLLECTION</p><h2>Book catalogue</h2></div><button id="addBookBtn" class="button primary">＋ Add a book</button></div>
+      <div class="toolbar">
+        <label class="search-wrap"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search title, author, ISBN…" aria-label="Search books"></label>
+        <select id="statusFilter" aria-label="Filter by availability"><option value="all">All statuses</option><option value="available">Available</option><option value="borrowed">On loan</option></select>
+      </div>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <div id="loading" class="loading">Connecting to your library…</div>
+      <div id="emptyState" class="empty" hidden><div class="empty-icon">▤</div><h3>No books found</h3><p>Try another search or add your first book to the catalogue.</p><button id="emptyAddBtn" class="button primary">Add a book</button></div>
+      <div class="table-wrap"><table id="booksTable"><thead><tr><th>BOOK</th><th>ISBN</th><th>CATEGORY</th><th>STATUS</th><th class="align-right">ACTIONS</th></tr></thead><tbody id="booksBody"></tbody></table></div>
+    </section>
+    <footer>Library Book Tracker <span>•</span> Built with HTML, CSS, JavaScript, Express & Supabase</footer>
+  </main>
+  <dialog id="bookDialog" class="dialog">
+    <form id="bookForm">
+      <div class="dialog-head"><div><p class="eyebrow" id="formEyebrow">NEW RECORD</p><h2 id="dialogTitle">Add a book</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Close dialog">×</button></div>
+      <input type="hidden" id="bookId">
+      <label>Book title <input id="title" name="title" maxlength="180" required placeholder="e.g. The Design of Everyday Things"></label>
+      <label>Author <input id="author" name="author" maxlength="120" required placeholder="e.g. Don Norman"></label>
+      <div class="form-row"><label>ISBN <input id="isbn" name="isbn" maxlength="20" placeholder="Optional"></label><label>Category <input id="category" name="category" maxlength="80" placeholder="e.g. Design"></label></div>
+      <label>Publication year <input id="publishedYear" name="publishedYear" type="number" min="1000" max="2100" placeholder="Optional"></label>
+      <p id="formError" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" id="cancelDialog" class="button secondary">Cancel</button><button type="submit" class="button primary" id="saveBookBtn">Save book</button></div>
+    </form>
+  </dialog>
+  <dialog id="loanDialog" class="dialog">
+    <form id="loanForm">
+      <div class="dialog-head"><div><p class="eyebrow">BORROWING RECORD</p><h2>Check out this book</h2></div><button type="button" id="closeLoanDialog" class="icon-button" aria-label="Close dialog">×</button></div>
+      <input type="hidden" id="loanBookId">
+      <p id="loanBookTitle" class="loan-book-title"></p>
+      <label>Borrower name <input id="borrower" maxlength="120" required placeholder="Enter borrower's full name"></label>
+      <label>Due date <input id="dueDate" type="date" required></label>
+      <p id="loanError" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" id="cancelLoan" class="button secondary">Cancel</button><button type="submit" class="button primary">Confirm checkout</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
